@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do</title>
+</head>
+
+<body>
+    <h2>To-Do App</h2>
+    <hr>
+    <form id="todo">
+        <label for="todoName">Todo Name</label>
+        <input type="text" id="todoName" placeholder="Name of ToDo"> <br><br>
+        <label for="todoDesc">Todo Description</label>
+        <input type="text" name="todoDesc" id="todoDesc" placeholder="Write description"> <br><br>
+        <button type="submit">Add</button>
+    </form>
+
+    <div>
+        <ul id="incomplete">
+            <b>To-Do List:</b>
+        </ul>
+        <ul id="completed">
+            <b>Completed To-Do's</b>
+        </ul>
+    </div>
+
+    <script src="index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</body>
+
+</html>
