@@ -11,15 +11,14 @@ form.addEventListener('submit', (event) => {
 
   //Add the object in the server database using HTTP POST request
   axios
-    .post('https://crudcrud.com/api/8b30063c843e4ac78b14669688a23de4/ToDo', obj)
+    .post('https://crudcrud.com/api/d68f4732d5eb417db448e3bedb998fab/ToDo', obj)
     .then((result) => {
+      incompleteToDos(obj);
       alert('To-Do added');
     })
     .catch((error) => {
       console.log(error);
     });
-
-  incompleteToDos(obj);
 
   //Clear the input fields
   document.getElementById('todoName').value = '';
@@ -29,16 +28,16 @@ form.addEventListener('submit', (event) => {
 //Show the list of incomplete and completed To-Do's
 window.addEventListener('DOMContentLoaded', () => {
   axios
-    .get('https://crudcrud.com/api/8b30063c843e4ac78b14669688a23de4/ToDo')
+    .get('https://crudcrud.com/api/d68f4732d5eb417db448e3bedb998fab/ToDo')
     .then((result) => {
       const todoArray = result.data;
       for (let val of todoArray) {
         if (val.isDone == false) incompleteToDos(val);
-        else completedToDo(val);
+        else completedToDos(val);
       }
     })
     .catch((error) => {
-      console.log(error);
+      alert('Requests limit over');
     });
 });
 
@@ -46,15 +45,19 @@ function incompleteToDos(obj) {
   const incomplete = document.getElementById('incomplete');
 
   const list = document.createElement('li');
+  incomplete.appendChild(list);
   list.innerHTML = `${obj.todoName}: &nbsp ${obj.todoDesc} `;
+  list.className = 'todo-list';
 
   const doneBtn = document.createElement('button');
+  list.appendChild(doneBtn);
   doneBtn.innerHTML = '&#10004';
+  doneBtn.className = 'btn';
   doneBtn.addEventListener('click', () => {
     incomplete.removeChild(doneBtn.parentElement);
     axios
       .put(
-        `https://crudcrud.com/api/8b30063c843e4ac78b14669688a23de4/ToDo/${obj._id}`,
+        `https://crudcrud.com/api/d68f4732d5eb417db448e3bedb998fab/ToDo/${obj._id}`,
         {
           todoName: obj.todoName,
           todoDesc: obj.todoDesc,
@@ -62,23 +65,23 @@ function incompleteToDos(obj) {
         }
       )
       .then((result) => {
-        console.log(result);
+        completedToDos(obj);
+        alert('To-Do is marked as done');
       })
       .catch((err) => {
         console.log(err);
       });
-
-    completedToDo(obj);
   });
-  list.appendChild(doneBtn);
 
   const delBtn = document.createElement('button');
+  list.appendChild(delBtn);
   delBtn.innerHTML = '&#10008';
-  delBtn.addEventListener('click', () => {
+  delBtn.className = 'btn';
+  delBtn.onclick = () => {
     incomplete.removeChild(delBtn.parentElement);
     axios
       .delete(
-        `https://crudcrud.com/api/8b30063c843e4ac78b14669688a23de4/ToDo/${obj._id}`
+        `https://crudcrud.com/api/d68f4732d5eb417db448e3bedb998fab/ToDo/${obj._id}`
       )
       .then((result) => {
         alert('To-Do deleted');
@@ -86,15 +89,13 @@ function incompleteToDos(obj) {
       .catch((err) => {
         console.log(err);
       });
-  });
-  list.appendChild(delBtn);
-
-  incomplete.appendChild(list);
+  };
 }
 
-function completedToDo(obj) {
+function completedToDos(obj) {
   const completed = document.getElementById('completed');
   const list = document.createElement('li');
-  list.innerHTML = `${obj.todoName}: &nbsp ${obj.todoDesc} `;
   completed.appendChild(list);
+  list.innerHTML = `${obj.todoName}: &nbsp ${obj.todoDesc} `;
+  list.className = 'todo-list';
 }
