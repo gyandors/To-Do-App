@@ -11,10 +11,9 @@ form.addEventListener('submit', (event) => {
 
   //Add the object in the server database using HTTP POST request
   axios
-    .post('https://crudcrud.com/api/d68f4732d5eb417db448e3bedb998fab/ToDo', obj)
+    .post('https://crudcrud.com/api/0734e3b668f6497fa2dca03e70364e78/ToDo', obj)
     .then((result) => {
       incompleteToDos(obj);
-      alert('To-Do added');
     })
     .catch((error) => {
       console.log(error);
@@ -28,7 +27,7 @@ form.addEventListener('submit', (event) => {
 //Show the list of incomplete and completed To-Do's
 window.addEventListener('DOMContentLoaded', () => {
   axios
-    .get('https://crudcrud.com/api/d68f4732d5eb417db448e3bedb998fab/ToDo')
+    .get('https://crudcrud.com/api/0734e3b668f6497fa2dca03e70364e78/ToDo')
     .then((result) => {
       const todoArray = result.data;
       for (let val of todoArray) {
@@ -37,7 +36,7 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     })
     .catch((error) => {
-      alert('Requests limit over');
+      console.log(error);
     });
 });
 
@@ -57,7 +56,7 @@ function incompleteToDos(obj) {
     incomplete.removeChild(doneBtn.parentElement);
     axios
       .put(
-        `https://crudcrud.com/api/d68f4732d5eb417db448e3bedb998fab/ToDo/${obj._id}`,
+        `https://crudcrud.com/api/0734e3b668f6497fa2dca03e70364e78/ToDo/${obj._id}`,
         {
           todoName: obj.todoName,
           todoDesc: obj.todoDesc,
@@ -66,7 +65,6 @@ function incompleteToDos(obj) {
       )
       .then((result) => {
         completedToDos(obj);
-        alert('To-Do is marked as done');
       })
       .catch((err) => {
         console.log(err);
@@ -81,11 +79,9 @@ function incompleteToDos(obj) {
     incomplete.removeChild(delBtn.parentElement);
     axios
       .delete(
-        `https://crudcrud.com/api/d68f4732d5eb417db448e3bedb998fab/ToDo/${obj._id}`
+        `https://crudcrud.com/api/0734e3b668f6497fa2dca03e70364e78/ToDo/${obj._id}`
       )
-      .then((result) => {
-        alert('To-Do deleted');
-      })
+      .then((result) => {})
       .catch((err) => {
         console.log(err);
       });

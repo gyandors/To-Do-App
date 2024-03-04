@@ -1,35 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To-Do</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-<body>
-    <h2>To-Do App</h2>
-    <hr>
-    <form id="todo">
-        <label for="todoName">Todo Name</label>
-        <input type="text" id="todoName" class="forminput" placeholder="Name of the ToDo"> <br><br>
-        <label for="todoDesc">Todo Description</label>
-        <input type="text" id="todoDesc" class="forminput" placeholder="Write description"> <br><br>
-        <button type="submit" class="btn">Add</button>
-    </form>
+  <body>
+    <div class="container">
+      <h2>To-Do App</h2>
+      <hr />
+      <form id="todo">
+        <input
+          type="text"
+          id="todoName"
+          class="forminput"
+          placeholder="Name of the Todo"
+        /><input
+          type="text"
+          id="todoDesc"
+          class="forminput"
+          placeholder="Write description"
+        /><button type="submit" class="btn">Add</button>
+      </form>
 
-    <div class="list">
-        <ul id="incomplete">
-            <b>To-Do List:</b>
-        </ul>
-        <ul id="completed">
-            <b>Completed To-Do's:</b>
-        </ul>
+      <div class="list">
+        <span>Upcoming:</span>
+        <ul id="incomplete"></ul>
+        <span>Completed:</span>
+        <ul id="completed"></ul>
+      </div>
     </div>
 
     <script src="index.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-</body>
-
+  </body>
 </html>
