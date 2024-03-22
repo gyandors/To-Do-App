@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>To-Do</title>
+    <title>Todo App</title>
     <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
     <div class="container">
-      <h2>To-Do App</h2>
+      <h2>Todo</h2>
       <hr />
       <form id="todo">
         <input
@@ -17,11 +17,13 @@
           id="todoName"
           class="forminput"
           placeholder="Name of the Todo"
+          required
         /><input
           type="text"
           id="todoDesc"
           class="forminput"
           placeholder="Write description"
+          required
         /><button type="submit" class="btn">Add</button>
       </form>
 

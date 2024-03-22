@@ -11,9 +11,10 @@ form.addEventListener('submit', (event) => {
 
   //Add the object in the server database using HTTP POST request
   axios
-    .post('https://crudcrud.com/api/0734e3b668f6497fa2dca03e70364e78/ToDo', obj)
+    .post('https://crudcrud.com/api/726a3f63532e45b6bc387cb8cd780096/ToDo', obj)
     .then((result) => {
       incompleteToDos(obj);
+      alert('Todo added');
     })
     .catch((error) => {
       console.log(error);
@@ -27,7 +28,7 @@ form.addEventListener('submit', (event) => {
 //Show the list of incomplete and completed To-Do's
 window.addEventListener('DOMContentLoaded', () => {
   axios
-    .get('https://crudcrud.com/api/0734e3b668f6497fa2dca03e70364e78/ToDo')
+    .get('https://crudcrud.com/api/726a3f63532e45b6bc387cb8cd780096/ToDo')
     .then((result) => {
       const todoArray = result.data;
       for (let val of todoArray) {
@@ -45,18 +46,17 @@ function incompleteToDos(obj) {
 
   const list = document.createElement('li');
   incomplete.appendChild(list);
-  list.innerHTML = `${obj.todoName}: &nbsp ${obj.todoDesc} `;
+  list.innerHTML = `${obj.todoName} - ${obj.todoDesc} `;
   list.className = 'todo-list';
 
   const doneBtn = document.createElement('button');
-  list.appendChild(doneBtn);
   doneBtn.innerHTML = '&#10004';
   doneBtn.className = 'btn';
   doneBtn.addEventListener('click', () => {
-    incomplete.removeChild(doneBtn.parentElement);
+    incomplete.removeChild(doneBtn.parentElement.parentElement);
     axios
       .put(
-        `https://crudcrud.com/api/0734e3b668f6497fa2dca03e70364e78/ToDo/${obj._id}`,
+        `https://crudcrud.com/api/726a3f63532e45b6bc387cb8cd780096/ToDo/${obj._id}`,
         {
           todoName: obj.todoName,
           todoDesc: obj.todoDesc,
@@ -65,6 +65,7 @@ function incompleteToDos(obj) {
       )
       .then((result) => {
         completedToDos(obj);
+        alert('Todo marked as done');
       })
       .catch((err) => {
         console.log(err);
@@ -72,26 +73,52 @@ function incompleteToDos(obj) {
   });
 
   const delBtn = document.createElement('button');
-  list.appendChild(delBtn);
   delBtn.innerHTML = '&#10008';
   delBtn.className = 'btn';
   delBtn.onclick = () => {
-    incomplete.removeChild(delBtn.parentElement);
+    incomplete.removeChild(delBtn.parentElement.parentElement);
     axios
       .delete(
-        `https://crudcrud.com/api/0734e3b668f6497fa2dca03e70364e78/ToDo/${obj._id}`
+        `https://crudcrud.com/api/726a3f63532e45b6bc387cb8cd780096/ToDo/${obj._id}`
       )
-      .then((result) => {})
+      .then((result) => {
+        alert('Todo has been deleted');
+      })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  const div = document.createElement('div');
+  div.appendChild(doneBtn);
+  div.appendChild(delBtn);
+
+  list.appendChild(div);
 }
 
 function completedToDos(obj) {
   const completed = document.getElementById('completed');
   const list = document.createElement('li');
   completed.appendChild(list);
-  list.innerHTML = `${obj.todoName}: &nbsp ${obj.todoDesc} `;
+  list.innerHTML = `${obj.todoName} - ${obj.todoDesc} `;
   list.className = 'todo-list';
+
+  const delBtn = document.createElement('button');
+  list.appendChild(delBtn);
+  delBtn.innerHTML = '&#10008';
+  delBtn.className = 'btn';
+  delBtn.onclick = () => {
+    let cnfrm = confirm('Are you sure want to delete');
+    if (cnfrm) {
+      completed.removeChild(delBtn.parentElement);
+      axios
+        .delete(
+          `https://crudcrud.com/api/726a3f63532e45b6bc387cb8cd780096/ToDo/${obj._id}`
+        )
+        .then((result) => {})
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
 }
